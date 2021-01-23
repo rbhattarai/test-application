@@ -72,14 +72,7 @@ public class UserController {
         userReporsitory.delete(user);
         return "redirect:/index";
     }
-
-//    @GetMapping("/users")
-//    public @ResponseBody  void showUsers() {
-//        for (User user : IUserRepository.findAll()) {
-//            user.getName();
-//        }
-//    }
-
+    
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<String> showUsers() {
         List<String> users = new ArrayList<>();
