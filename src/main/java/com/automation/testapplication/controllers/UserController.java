@@ -2,6 +2,7 @@ package com.automation.testapplication.controllers;
 
 import com.automation.testapplication.entities.User;
 import com.automation.testapplication.repositories.IUserRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -24,6 +25,11 @@ public class UserController {
     @Autowired
     public UserController(IUserRepository userReporsitory) {
         this.userReporsitory = userReporsitory;
+    }
+
+    @GetMapping("/")
+    public String showIndex(Model model) {
+        return showUserList(model);
     }
 
     @GetMapping("/index")
@@ -72,13 +78,15 @@ public class UserController {
         userReporsitory.delete(user);
         return "redirect:/index";
     }
-    
+
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<String> showUsers() {
-        List<String> users = new ArrayList<>();
+    public @ResponseBody Map<String,Object> showUsers() {
+        Map<String, Object> users = new HashMap<>();
         for (User user : userReporsitory.findAll()) {
-            users.add(user.toString());
+            users.put("name", user.getName());
+            users.put("email", user.getEmail());
         }
+        String userJSON = new Gson().toJson(users);
         return users;
     }
 }

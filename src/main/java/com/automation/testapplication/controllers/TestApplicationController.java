@@ -14,7 +14,7 @@ public class TestApplicationController {
 
 //    @RequestMapping (value = "/", method = RequestMethod.GET)
 //    public String welcome() {
-//        return "Welcome to Test Application !!!";
+//        return "Welcome";
 //    }
 
     @GetMapping ("/welcome")
