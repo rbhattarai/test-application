@@ -17,7 +17,7 @@ ext {
 }
 
 dependencies {
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -30,6 +30,7 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured:4.2.0'
 	testImplementation 'io.rest-assured:json-path:4.2.0'
 	testImplementation 'io.rest-assured:xml-path:4.2.0'
+	testImplementation 'org.hamcrest:hamcrest:2.2'
 	testImplementation 'io.cucumber:cucumber-java:6.9.0'
 	testImplementation 'io.cucumber:cucumber-junit:6.9.0'
 	testImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
@@ -44,6 +45,7 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+	//systemProperty "cucumber.options", System.getProperty("cucumber.options")
 }
 
 tasks.withType(Test) {

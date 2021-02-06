@@ -1,0 +1,14 @@
+com/automation/testapplication/configs/TestApplicationConfig.java
+ com.automation.testapplication.configs.TestApplicationConfig
+com/automation/testapplication/repositories/IUserRepository.java
+ com.automation.testapplication.repositories.IUserRepository
+com/automation/testapplication/entities/User.java
+ com.automation.testapplication.entities.User
+com/automation/testapplication/controllers/TestApplicationController.java
+ com.automation.testapplication.controllers.TestApplicationController
+com/automation/testapplication/TestApplication.java
+ com.automation.testapplication.TestApplication
+com/automation/testapplication/services/IUserService.java
+ com.automation.testapplication.services.IUserService
+com/automation/testapplication/controllers/UserController.java
+ com.automation.testapplication.controllers.UserController

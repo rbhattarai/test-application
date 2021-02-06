@@ -87,6 +87,13 @@ public class UserController {
             users.put("email", user.getEmail());
         }
         String userJSON = new Gson().toJson(users);
+
         return users;
     }
+
+    @GetMapping("/allusers")
+    public @ResponseBody Iterable<User> getAllUsers() {
+        return userReporsitory.findAll();
+    }
+
 }

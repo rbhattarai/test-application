@@ -1,11 +1,12 @@
+@UITest
 Feature: Manage Users
 
-  @UITest @HealthCheck
+  @HealthCheck
   Scenario: Check Status
     Given I am in Landing Page
     Then I verify Landing Page opens successfully
 
-  @UITest @SmokeTest @AddUser
+  @SmokeTest @AddUser
   Scenario Outline: Add User and Verify User List
     Given I am in Landing Page
     And I click Add New User
