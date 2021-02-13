@@ -11,7 +11,6 @@ import io.restassured.specification.FilterableResponseSpecification;
 import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,35 +24,30 @@ class TestApplicationTests {
 
 	String BASE_URL = "http://localhost:8080";
 	@Autowired
-	private ConfigUtility configUtility;
+	private Credential credential;
 
-	@Test
 	void contextLoads() {
 		RestAssured.baseURI = BASE_URL;
 	}
 
-	@Test
 	public void testAppStatusOnly() {
-		given().auth().basic(configUtility.username, configUtility.password).when().request("HEAD", BASE_URL).then().statusCode(200);
+		given().auth().basic(credential.username, credential.password).when().request("HEAD", BASE_URL).then().statusCode(200);
 	}
 
-	@Test
 	public void testAppStatusBasic() {
-		given().auth().basic(configUtility.username, configUtility.password).get()
+		given().auth().basic(credential.username, credential.password).get()
 				.then().assertThat().statusCode(200);
 	}
 
-	@Test
 	public void testAppStatusPreemptive() {
 		given().auth().preemptive()
-				.basic(configUtility.username, configUtility.password).when().request("HEAD", BASE_URL).then().statusCode(200);
+				.basic(credential.username, credential.password).when().request("HEAD", BASE_URL).then().statusCode(200);
 
 	}
 
-	@Test
 	public void testAppStatusDigest() {
 		given().auth()
-				.digest(configUtility.username, configUtility.password).when().request("HEAD", BASE_URL).then().statusCode(200);
+				.digest(credential.username, credential.password).when().request("HEAD", BASE_URL).then().statusCode(200);
 
 	}
 
@@ -104,7 +98,6 @@ class TestApplicationTests {
 		return new SessionData(tokenResponse.header("XSRF-TOKEN"), sessionFilter.getSessionId());
 	}
 
-	@Test
 	public void addUser() throws JSONException {
 		FormAuthConfig formAuthConfig = new FormAuthConfig("login","username","password");
 		formAuthConfig.withAutoDetectionOfCsrf();
@@ -121,11 +114,11 @@ class TestApplicationTests {
 //				.queryParam("email", "test5@gmail.com")
 //				.post( "/adduser");
 
-		given().auth().form(configUtility.username, configUtility.password, formAuthConfig)
+		given().auth().form(credential.username, credential.password, formAuthConfig)
 				.when().get("/login").then().log().all().extract().response();
 
 		given()
-					.auth().form(configUtility.username, configUtility.password, FormAuthConfig.springSecurity().withCsrfFieldName("_csrf").sendCsrfTokenAsFormParam())
+					.auth().form(credential.username, credential.password, FormAuthConfig.springSecurity().withCsrfFieldName("_csrf").sendCsrfTokenAsFormParam())
 				.when()
 						.queryParam("name","test5")
 						.queryParam("email", "test5@gmail.com")
@@ -134,7 +127,7 @@ class TestApplicationTests {
 					.log().all().extract().response();
 
 //		Response response = given()
-//				.auth().form(configUtility.username, configUtility.password, new FormAuthConfig("login", "username", "password"))
+//				.auth().form(credential.username, credential.password, new FormAuthConfig("login", "username", "password"))
 //				.when()
 //				.get( "/login")
 //				.then().log().all().extract().response();
@@ -144,7 +137,7 @@ class TestApplicationTests {
 //		jsonObject.put("email", "test1@gmail.com");
 //
 //		//1) get sessionId
-//		Response response = given().auth().basic(configUtility.username, configUtility.password).contentType(ContentType.JSON)
+//		Response response = given().auth().basic(credential.username, credential.password).contentType(ContentType.JSON)
 //				.when().get().then().log().all().extract().response();
 //		String jsessionidId =  response.getSessionId();//or response.cookie("JSESSIONID");
 //
@@ -166,8 +159,8 @@ class TestApplicationTests {
 //				.log().all().assertThat().statusCode(200);
 
 //		Response loginResponse = given().contentType(ContentType.JSON)
-//				.param(configUtility.username)
-//				.param(configUtility.password)
+//				.param(credential.username)
+//				.param(credential.password)
 //				.when().post(BASE_URL + "/login").then().log().all().extract().response();
 
 //		given().contentType(APPLICATION_JSON).
@@ -177,7 +170,7 @@ class TestApplicationTests {
 //				when().post(USER_PATH).
 //				then().log().all().statusCode(CREATED.value());
 
-//		given().auth().basic(configUtility.username, configUtility.password)
+//		given().auth().basic(credential.username, credential.password)
 //				.log().all()
 //				.header("Accept", ContentType.JSON.getAcceptHeader())
 //				.cookie("XSRF-TOKEN", loginResponse.cookie("XSRF-TOKEN"))
@@ -192,9 +185,8 @@ class TestApplicationTests {
 
 	}
 
-	@Test
 	public void getUser() {
-		given().auth().basic(configUtility.username, configUtility.password).get(BASE_URL + "/users").then().statusCode(200)
+		given().auth().basic(credential.username, credential.password).get(BASE_URL + "/users").then().statusCode(200)
 				.body("name", Matchers.equalTo("rohan"));
 	}
 

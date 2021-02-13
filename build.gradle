@@ -8,6 +8,8 @@ group = 'com.automation'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+apply plugin: 'java'
+
 repositories {
 	mavenCentral()
 }
@@ -26,7 +28,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-json'
 	implementation 'com.google.code.gson:gson:2.8.6'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.testcontainers:junit-jupiter'
+//	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testCompileOnly 'junit:junit:4.13'
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
 	testImplementation 'io.rest-assured:rest-assured:4.2.0'
 	testImplementation 'io.rest-assured:json-path:4.2.0'
 	testImplementation 'io.rest-assured:xml-path:4.2.0'
@@ -45,7 +51,8 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
-	//systemProperty "cucumber.options", System.getProperty("cucumber.options")
+	testLogging.showStandardStreams = true
+	systemProperty("cucumber.options", System.getProperty("cucumber.options"))
 }
 
 tasks.withType(Test) {

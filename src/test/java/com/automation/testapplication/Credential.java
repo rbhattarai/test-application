@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConfigUtility {
+public class Credential {
 
     @Value("${spring.security.user.name}")
     String username;

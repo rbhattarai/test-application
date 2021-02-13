@@ -2,7 +2,6 @@ package com.automation.testapplication;
 
 import com.automation.testapplication.po.AmazonSearchPage;
 import com.automation.testapplication.po.AmazonSearchResultsPage;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -24,7 +23,7 @@ public class UITests {
         driver.get(BASE_URL_AMAZON);
     }
 
-    @Test
+
     public void amazonSearchAndVerify()
     {
         System.out.println("TC: SeleniumWD using POM Search and Verify");
